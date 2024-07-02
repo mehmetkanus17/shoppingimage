@@ -4,11 +4,11 @@ on:
     branches:
       - main
 env:
-  ERROR_IMAGE: shopping:latest
+  ERROR_IMAGE: ghcr.io/mehmetkanus17/shopping:latest
   REGISTRY: ghcr.io
 
 jobs:
-  build-manager:
+  build-shopping:
     runs-on: ubuntu-latest
     permissions:
       contents: read
