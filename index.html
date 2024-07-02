@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Landing Page</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #333;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            overflow-x: hidden;
+        }
+        header {
+            background: #007BFF;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            animation: slideDown 1s ease-in-out;
+        }
+        .main-content {
+            padding: 40px 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .product {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .product:hover {
+            transform: translateY(-10px);
+        }
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .product img:hover {
+            transform: scale(1.05);
+        }
+        .product-details {
+            max-width: 800px;
+            margin: 20px;
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .carousel img {
+            width: 100%;
+            height: auto;
+            display: none;
+        }
+        .carousel img.active {
+            display: block;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .carousel .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+        .carousel .arrow:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .carousel .prev {
+            left: 10px;
+        }
+        .carousel .next {
+            right: 10px;
+        }
+        footer {
+            background: #f1f1f1;
+            padding: 20px 0;
+            margin-top: 20px;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Product Page</h1>
+    </header>
+    <div class="main-content">
+        <div class="product">
+            <div class="carousel">
+                <img src="https://s3.amazonaws.com/mehmetkanus.com/laptopimages/1.png" alt="Product Image 1" class="carousel-image active">
+                <img src="https://s3.amazonaws.com/mehmetkanus.com/laptopimages/2.png" alt="Product Image 2" class="carousel-image">
+                <img src="https://s3.amazonaws.com/mehmetkanus.com/laptopimages/3.png" alt="Product Image 3" class="carousel-image">
+                <button class="arrow prev" onclick="prevImage()">&#10094;</button>
+                <button class="arrow next" onclick="nextImage()">&#10095;</button>
+            </div>
+            <div class="product-details">
+                <h2>Amazing Product</h2>
+                <p>Discover the amazing features of our latest product. Designed with the user in mind, it offers unparalleled performance and value.</p>
+                <ul>
+                    <li>Feature 1: High quality</li>
+                    <li>Feature 2: Affordable price</li>
+                    <li>Feature 3: Easy to use</li>
+                </ul>
+                <button style="padding: 10px 20px; background: #007BFF; color: white; border: none; cursor: pointer; border-radius: 5px;">Buy Now</button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let currentImageIndex = 0;
+        const images = document.querySelectorAll('.carousel-image');
+
+        function showImage(index) {
+            images.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : images.length - 1;
+            showImage(currentImageIndex);
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex < images.length - 1) ? currentImageIndex + 1 : 0;
+            showImage(currentImageIndex);
+        }
+
+        showImage(currentImageIndex);
+    </script>
+</body>
+</html>
