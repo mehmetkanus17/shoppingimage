@@ -45,22 +45,16 @@ metadata:
   namespace: product
   name: shopping-ingress
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/custom-http-errors: "400,401,402,403,404,405,406,415,500,501,502,503,504,505"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
-  defaultBackend:
-    service:
-      name: backend-svc
-      port:
-        number: 80
   ingressClassName: nginx
   tls:
   - hosts:
-    - shopping.mehmetkanus.com
+    - shop.mehmetkanus.com
     secretName: tls-shopping
   rules:
-    - host: shopping.mehmetkanus.com
+    - host: shop.mehmetkanus.com
       http:
         paths:
           - path: /
