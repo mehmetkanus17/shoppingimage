@@ -4,7 +4,8 @@ on:
     branches:
       - main
 env:
-  ERROR_IMAGE: ghcr.io/mehmetkanus17/shopping
+  PRODUCT_IMAGE: ghcr.io/mehmetkanus17/shopping
+  BACKEND_IMAGE: ghcr.io/mehmetkanus17/backend
   REGISTRY: ghcr.io
 
 jobs:
@@ -22,7 +23,7 @@ jobs:
         uses: docker/metadata-action@v5
         id: metadata
         with:
-          images: ${{ env.ERROR_IMAGE }}
+          images: ${{ env.PRODUCT_IMAGE }}
           tags: |
             ${{ github.sha }}
             latest
@@ -37,7 +38,43 @@ jobs:
       - name: build and push image to repository
         uses: int128/kaniko-action@v1
         with:
-          context: .
+          # context: .
+          file: Dockerfile-shopping
+          push: true
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+
+  build-backend:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: tagging image and metadata
+        uses: docker/metadata-action@v5
+        id: metadata
+        with:
+          images: ${{ env.BACKEND_IMAGE }}
+          tags: |
+            ${{ github.sha }}
+            latest
+
+      - name: login GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: build and push image to repository
+        uses: int128/kaniko-action@v1
+        with:
+          # context: .
+          file: Dockerfile-backend
           push: true
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
