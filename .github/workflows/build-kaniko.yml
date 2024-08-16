@@ -1,8 +1,6 @@
 name: Build error pages images
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 env:
   PRODUCT_IMAGE: ghcr.io/mehmetkanus17/shopping
   BACKEND_IMAGE: ghcr.io/mehmetkanus17/backend

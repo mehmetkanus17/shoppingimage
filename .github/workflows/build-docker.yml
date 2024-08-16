@@ -25,10 +25,8 @@ jobs:
         with:
           images: ${{ env.PRODUCT_IMAGE }}
           tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{version}},value=1.2.3,increment=minor,major-max=5,minor-max=5
+            latest
 
       - name: login GHCR
         uses: docker/login-action@v3
@@ -62,10 +60,8 @@ jobs:
         with:
           images: ${{ env.BACKEND_IMAGE }}
           tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{version}},value=1.2.3,increment=minor,major-max=5,minor-max=5
+            latest
 
       - name: login GHCR
         uses: docker/login-action@v3
