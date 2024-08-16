@@ -27,7 +27,7 @@ jobs:
           tags: |
             type=semver,pattern=v{{version}},value=v1.0.0,increment=minor,major-max=5,minor-max=5
             latest
-
+ 
       - name: login GHCR
         uses: docker/login-action@v3
         with:
