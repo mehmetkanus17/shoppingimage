@@ -45,3 +45,14 @@ spec:
       port:
         number: 80
 ````
+
+- install helm charts
+
+````bash
+helm upgrade --install ingress-nginx nginx/ingress-nginx --create-namespace --namespace nginx
+
+helm upgrade --install ingress-nginx nginx/ingress-nginx --namespace nginx --set controller.service.externalTrafficPolicy="Local",controller.allowSnippetAnnotations=true
+
+helm upgrade --install cert-manager jetstack/cert-manager --create-namespace --namespace cert-manager --set crds.enabled=true,crds.keep=false --version v1.15.1
+
+helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --set installCRDs=true --version v1.13.3

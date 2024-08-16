@@ -1,0 +1,84 @@
+name: Build error pages images
+on:
+  push:
+    branches:
+      - main
+env:
+  PRODUCT_IMAGE: ghcr.io/mehmetkanus17/shopping
+  BACKEND_IMAGE: ghcr.io/mehmetkanus17/backend
+  REGISTRY: ghcr.io
+
+jobs:
+  build-shopping:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: tagging image and meta
+        uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: ${{ env.PRODUCT_IMAGE }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+
+      - name: login GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: build and push image to repository
+        uses: docker/build-push-action@v5
+        with:
+          # context: .
+          file: ./Dockerfile-shopping
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  build-backend:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: tagging image and metadata
+        uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: ${{ env.BACKEND_IMAGE }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+
+      - name: login GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: build and push image to repository
+        uses: docker/build-push-action@v5
+        with:
+          # context: .
+          file: ./Dockerfile-backend
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
