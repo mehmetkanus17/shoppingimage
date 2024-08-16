@@ -34,8 +34,11 @@ jobs:
             ${{ env.PRODUCT_IMAGE }}
             ${{ env.BACKEND_IMAGE }}
           tags: |
-            type=semver,pattern=v{{version}},value=v1.0.0,increment=minor,major-max=5,minor-max=5
-            latest
+            type=semver,pattern=v{{version}}
+            type=semver,pattern=v{{major}}.{{minor}}
+            type=sha
+            type=ref,event=branch
+            type=ref,event=pr
 
       - name: Login to GHCR
         if: github.event_name != 'pull_request'
