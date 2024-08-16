@@ -25,7 +25,7 @@ jobs:
         with:
           images: ${{ env.PRODUCT_IMAGE }}
           tags: |
-            type=semver,pattern={{version}},value=1.2.3,increment=minor,major-max=5,minor-max=5
+            type=semver,pattern={{version}},value=v1.0.0,increment=minor,major-max=5,minor-max=5
             latest
 
       - name: login GHCR
@@ -60,7 +60,7 @@ jobs:
         with:
           images: ${{ env.BACKEND_IMAGE }}
           tags: |
-            type=semver,pattern={{version}},value=1.2.3,increment=minor,major-max=5,minor-max=5
+            type=semver,pattern={{version}},value=v1.0.0,increment=minor,major-max=5,minor-max=5
             latest
 
       - name: login GHCR
